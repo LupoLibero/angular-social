@@ -17,7 +17,7 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
             restrict: 'A',
             scope: {
                 'url': '=',
-                'title': '=',
+                'title': '=',
                 'description': '=',
                 'image': '=',
                 'showcounts': '='
@@ -142,17 +142,19 @@ app.directive('ngSocialFacebook', function() {
     return {
         restrict: 'C',
         require: '^?ngSocialButtons',
-        scope: true,
+        scope: {
+          count: '@'
+        },
         replace: true,
         transclude: true,
-        template: '<li>' +
-                    '<a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)"' +
-                        ' class="ng-social-button">' +
-                        '<span class="ng-social-icon"></span>' +
-                        '<span class="ng-social-text" ng-transclude></span>' +
-                    '</a>' +
-                    '<span ng-show="count" class="ng-social-counter">{{ count }}</span>' +
-                   '</li>',
+        template: '<span>' +
+                      '<a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)"' +
+                          ' class="ng-social-button">' +
+                            '<span class="ng-social-icon"></span>' +
+                            '<span class="ng-social-text" ng-transclude></span>' +
+                      '</a>' +
+                      '<span ng-show="count" class="ng-social-counter">{{ count }}</span>' +
+                   '</span>',
         link: function(scope, element, attrs, ctrl) {
             element.addClass('ng-social-facebook');
             if (!ctrl) {
@@ -175,7 +177,7 @@ app.directive('ngSocialTwitter', function() {
             }
         },
         popup: {
-            url: 'https://twitter.com/intent/tweet?url={url}&text={title}',
+            url: 'http://twitter.com/intent/tweet?url={url}&text={title}',
             width: 600,
             height: 450
         },
@@ -192,16 +194,19 @@ app.directive('ngSocialTwitter', function() {
     return {
         restrict: 'C',
         require: '^?ngSocialButtons',
-        scope: true,
+        scope: {
+          count: '@'
+        },
         replace: true,
         transclude: true,
-        template: '<li> \
-                    <a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)" class="ng-social-button"> \
-                        <span class="ng-social-icon"></span> \
-                        <span class="ng-social-text" ng-transclude></span> \
-                    </a> \
-                    <span ng-show="count" class="ng-social-counter">{{ count }}</span> \
-                   </li>',
+        template: '<span>' +
+                    '<a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)"' +
+                    ' class="ng-social-button">' +
+                        '<span class="ng-social-icon"></span>' +
+                        '<span class="ng-social-text" ng-transclude></span>' +
+                    '</a>' +
+                    '<span ng-show="count" class="ng-social-counter">{{ count }}</span>' +
+                   '</span>',
         controller: function($scope) {
         },
         link: function(scope, element, attrs, ctrl) {
